@@ -53,12 +53,12 @@ int main(int argc,char * argv[])
         return -1;
     }
 
-    int m,n,r1,r2;
+    int m,r1,r2;
     m = atoi(argv[1]);
-    n = atoi(argv[2]);
+    //n = atoi(argv[2]);
     r1 = atoi(argv[3]);
     r2 = atoi(argv[4]);
-    cout << m << " " << n << endl;
+    cout << m << " " << m << endl;
     std::uniform_int_distribution<long long unsigned> dpoint(0,r1);    
     std::uniform_int_distribution<long long unsigned> drange(1,r2);    
     vector<pair<int,int>> data[2];
