@@ -33,5 +33,6 @@ int main(int argc,char * argv[])
         data.push_back(d);
         cout << d << endl;
     }
+    cout << "#output" << endl;
     makeAnswer(data,m,n);
 }

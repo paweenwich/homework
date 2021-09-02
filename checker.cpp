@@ -10,21 +10,24 @@ int main(int argc,char * argv[])
     }
     //assume 2 for now
     std::ifstream infile(argv[1]);
-    int m,n;
-    infile >> m >> n;
     // skip data
-    for(int i=0;i<m;i++){
-        int a; 
-        infile >> a;
+    while(true){
+        string s;
+        infile >> s;
+        if(s == "#output"){
+            break;
+        }
     }
-    for(int i=0;i<n;i++){
+    int count = 0;
+    while(!cin.eof() && !infile.eof()){
         int a,b;
         cin >> a;
         infile >> b;
         if(a!=b){
-            printf("FAIL AT %d %d -> %d\n",i,a,b);
+            printf("FAIL AT %d %d -> %d\n",count,a,b);
             return(-1);
         }
+        count++;
     }
     printf("PASS\n");
     return(0);
