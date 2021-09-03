@@ -28,7 +28,19 @@ void makeAnswer(vector<pair<int,int>> &data1,vector<pair<int,int>> &data2)
 //}
 //cout << endl;
     for(auto p: data2){
-        auto it = lower_bound(data1.begin(),data1.end(),p.first,[](pair<int,int> &p1,int value){
+        bool flgOverlap = false;
+        for(auto s:data1){
+            if(isOverlap(p,s)){
+                flgOverlap = true;
+                break;
+            }
+        }
+        if(flgOverlap){
+            cout << "1 ";
+        }else{
+            cout << "0 ";
+        }
+        /*auto it = lower_bound(data1.begin(),data1.end(),p.first,[](pair<int,int> &p1,int value){
             return p1.second < value;
         });
         if(it==data1.end()){
@@ -40,7 +52,7 @@ void makeAnswer(vector<pair<int,int>> &data1,vector<pair<int,int>> &data2)
             }else{
                 cout << "0 ";
             }
-        }
+        }*/
     }
 }
 
