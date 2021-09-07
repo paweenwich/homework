@@ -15,7 +15,8 @@ void makeAnswer(vector<int> &data)
 int main(int argc,char * argv[])
 {
     //std::random_device rd;
-    std::default_random_engine generator(0);
+    std::time_t result = std::time(nullptr);
+    std::default_random_engine generator(result);
     if(argc != 3){
         printf("USAGE %s m r\n",argv[0]);
         return -1;
@@ -27,19 +28,19 @@ int main(int argc,char * argv[])
     //cout << m << endl;
     vector<int> data;
     std::uniform_int_distribution<long long unsigned> dpoint(0,r1);    
-    for(int i=0;i<m;i++){
-        int x = dpoint(generator);
-        if(find(data.begin(),data.end(),x)==data.end()){
-            //cout << x << " " ;
-            data.push_back(x);
-        }
+    int repNum = dpoint(generator);
+    for(int i=0;i< m/2 + 1;i++){
+        data.push_back(repNum);
     }
+    while((int)data.size()<m){
+        data.push_back(dpoint(generator));
+    }
+    std::shuffle(data.begin(),data.end(),generator);
     cout << data.size() << endl;
     for(auto x: data) cout << x << " ";
     cout << endl;
     cout << "#output" << endl;
-    makeAnswer(data);
-    for(auto x: data) cout << x << " ";
+    //makeAnswer(data);
+    cout << repNum;
     cout << endl;
 }
-
