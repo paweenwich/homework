@@ -5,7 +5,7 @@
 #include <chrono>
 using namespace std;
 
-void preProcessData(vector<char> &data)
+void preProcessData(vector<char> &data,int questionLength)
 {
 }
 
@@ -52,7 +52,7 @@ int main(int argc,char * argv[])
         questions.push_back(q);
     }
     cout << "preProcessData data..\n";
-    preProcessData(data);
+    preProcessData(data,n);
     cout << "Finding DNA..\n";
     vector<int> output;
     auto start = chrono::high_resolution_clock::now();
@@ -63,7 +63,7 @@ int main(int argc,char * argv[])
         }
         auto now = chrono::high_resolution_clock::now();
         auto duration =  chrono::duration_cast<chrono::microseconds>(now - start);
-        if(duration.count() > 1000000){
+        if(duration.count() > 5000000){
             break;
         }
     }
