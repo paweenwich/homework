@@ -31,7 +31,7 @@ int main(int argc,char * argv[])
     int m,r;
     m = atoi(argv[1]);
     r = atoi(argv[2]);
-    cout << m << " " << r << endl;
+    cout << m << endl;
     vector<int> data;
     std::uniform_int_distribution<long long unsigned> dpoint(-r,r);  // inclusive random
     for(int i=0;i< m;i++){
