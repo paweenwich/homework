@@ -6,18 +6,17 @@ using namespace std;
 
 void makeAnswer(vector<int> &data)
 {
-    int sum = accumulate(data.begin(),data.end(),0);
-    int left = 0;
-    for(int i=0;i<(int)data.size();i++){
-        sum -= data[i];
-        if(sum == left){
-            cout << i << " ";
+    int maxvalue = 0;
+    int index = 0;
+    for(int i=0;i<(int)data.size()-1;i++){
+        int diff = data[i+1] - data[i];
+        if(diff > maxvalue){
+            index = i;
+            maxvalue = diff;
         }
-        left+=data[i];
     }
-    cout << endl;
+    cout << data[index] << " " << data[index+1] << endl;
 }
-
 
 int main(int argc,char * argv[])
 {
@@ -34,7 +33,7 @@ int main(int argc,char * argv[])
     r = atoi(argv[2]);
     cout << m << endl;
     vector<int> data;
-    std::uniform_int_distribution<long long unsigned> dpoint(-r,r);  // inclusive random
+    std::uniform_int_distribution<long long unsigned> dpoint(0,r);  // inclusive random
     for(int i=0;i< m;i++){
         int index = dpoint(generator);
         cout << index << " ";
