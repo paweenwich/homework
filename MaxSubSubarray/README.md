@@ -19,4 +19,3 @@ sub array with the largest sum
 ~~~
 4 -1 2 1
 ~~~
-
