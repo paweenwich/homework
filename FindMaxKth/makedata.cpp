@@ -39,7 +39,7 @@ int main(int argc,char * argv[])
     m = atoi(argv[1]);
     k = atoi(argv[2]);
     r = atoi(argv[3]);
-    cout << m << endl;
+    cout << m << " " << k << endl;
     vector<int> data;
     std::uniform_int_distribution<long long unsigned> dpoint(0,r);  // inclusive random
     for(int i=0;i< m;i++){
