@@ -1,21 +1,20 @@
-# Maximum Sum Subarray Problem (Kadane’s Algorithm)
-https://www.techiedelight.com/maximum-subarray-problem-kadanes-algorithm/
+# lowerbound upperbound
 
-Given an integer array, find a contiguous subarray within it that has the largest sum.
+Given an integer sorted array, find lowerbound and upperbound position (similar to std:lowerbound upperbound)
 
 ## ข้อมูลเข้า
-บรรทัดแรกประกอบด้วยจำนวนเต็ม 1 ตัวคือ m เป็นความยาวของ ข้อมูล
-หลังจากป็นข้อมูล a จำนวน m ตัว  โดย  -10000 <= a <= 10000
-  
+บรรทัดแรกประกอบด้วยจำนวนเต็ม 2 ตัวคือ m ,n  โดยที่ m เป็นความยาวของ ข้อมูล และ n เป็นจำนวนที่จะหา
+หลังจากป็นข้อมูล a จำนวน m ตัว  โดย  0 <= a <= 1000000
+
 ## ข้อมูลส่งออก
-sub array with the largest sum
+lowerbound index, upperbound index
 ## Example
 ### Input
 ~~~
-9
--2 1 -3 4 -1 2 1 -5 4
+10 5
+0 0 1 2 5 5 7 7 8 10
 ~~~
 ### Output
 ~~~
-4 -1 2 1
+4 6
 ~~~
