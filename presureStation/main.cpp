@@ -47,9 +47,10 @@ bool isCoverValid(){
     return true;
 }
 int procCount = 0;
-map<string,ll> cache;
-ll  process(int index, int prevOn){
-    //cout << indent << "process start=" << index << " "<< prevOn << " \n";
+map<int,ll> cache;
+int currentMinCost = INT_MAX;
+ll  process(int index, int prevOn,int prevCost,string indent=""){
+    cout << indent << "process start=" << index << " "<< prevOn << " " << prevCost << " " << currentMinCost << " \n";
     //cout << indent; dumpVector(cover) ;
     procCount++;
     int left = cost.size() - index;
@@ -71,41 +72,45 @@ ll  process(int index, int prevOn){
     if(index - prevOn > 2*span + 1){
         return INT_MAX;
     }
-    string key = to_string(index) + "_" + to_string(prevOn);
+    //string key = to_string(index) + "_" + to_string(prevOn);
+    int key = index*100000 + prevOn;
     auto it = cache.find(key);
     if(it!=cache.end()){
+        cout << indent << "cache=" << it->second << "\n";        
         return it->second;
     }
 
     // try on this index
     ll minCost = INT_MAX;
-    vector<int> cov = cover;
-    doStation(index,1);
-    ll costOn = process(index+1,index);
-    cover = cov; //doStation(index,-1);
-    if(costOn!=INT_MAX){
-        minCost = cost[index] + costOn;
-    }
-    //scover.pop();
-    ll costOff = process(index+1,prevOn);
+    ll costOn = INT_MAX;
+    //if(prevCost + +cost[index] < currentMinCost ){
+        vector<int> cov = cover;
+        doStation(index,1);
+        costOn = process(index+1,index,prevCost+cost[index],indent + "-");
+        cover = cov; //doStation(index,-1);
+        if(costOn!=INT_MAX){
+            minCost = cost[index] + costOn;
+        }
+    //}
+    ll costOff = process(index+1,prevOn,prevCost,indent + "-");
     if(costOff!=INT_MAX){
         if(costOff < minCost){
             minCost = costOff;
         }
     }
-    //cout << "on=" << costOn << " + " << cost[index] <<  " off="<< costOff <<" \n";
-    /*auto it = cache.find(key);
-    if(it!=cache.end()){
-        if(it->second != minCost){
-            cout << key << " " << it->second << " <> "<< minCost <<" \n";
-            exit(0);
-        }
-    }*/
-    cout << key << " " << minCost <<" \n";
+    cout << indent << "on=" << costOn << " + " << cost[index] <<  " off="<< costOff <<" \n";        
+    
     cache[key] = minCost;
     return minCost;
 }
 
+int greedy(){
+    int ret = 0;
+    for(int i=0;i<cost.size();i+=span){
+        ret += *min_element(cost.begin()+i,cost.begin()+i+span);
+    }
+    return ret;
+}
 int main(int argc,char *argv[]){
     ios_base::sync_with_stdio(false); cin.tie(NULL);
     int m,n;
@@ -121,7 +126,8 @@ int main(int argc,char *argv[]){
         cover.push_back(0);
     }
     //dumpVector(cost);
-    ll minCost = process(0,-(span + 1));
-    cout << minCost << " " << procCount << " " << cv << " \n";
+    //currentMinCost = greedy();
+    ll minCost = process(0,-(span + 1),0);
+    cout << minCost << " " << procCount << " " << cv << " " << cache.size() << " \n";
     return 0;
 }
