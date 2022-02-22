@@ -7,11 +7,14 @@ struct node {
     bool operator<(const node &a) const {
         return val>a.val || (val==a.val && last>a.last);
     }
+    void show() const {
+        cout << "[" << val << "," << last << "]";
+    }
 };
 priority_queue<node> pq;
 void dumpq(priority_queue<node> temp){
     while (!temp.empty()) {
-        cout << "[" << temp.top().val << "," << temp.top().last << "]";
+        temp.top().show();
         temp.pop();
     }
     cout << "\n";
@@ -23,7 +26,7 @@ int main() {
     for(int i=1; i<=n; i++) {
         int val;
         scanf("%d",&val);
-        cout<< "start " << i << " val=" << val<< " "; dumpq(pq);
+        cout<< "start " << i << " val=" << val ; dumpq(pq);
         if(i<=k+1)
             pq.push(node(val,i));
 
@@ -33,8 +36,9 @@ int main() {
                 ans=min(ans,pq.top().val);
                 cout<< " ans=" << oldAnds << "->" << ans << "\n"; 
             }
+            cout << " pop "; pq.top().show(); cout << "\n";//dumpq(pq);
             pq.pop();
-            cout << " pop ";dumpq(pq);
+            
         }
 
         if(!pq.empty()){
@@ -48,7 +52,7 @@ int main() {
         if(pq.top().last>=n-k){
             int oldAnds = ans;
             ans=min(ans,pq.top().val);
-            cout<< " " << pq.top().last << " ans=" << oldAnds << "->" << ans << "\n"; 
+            cout<< " "  << n-k << " ";  pq.top().show(); cout << " ans=" << oldAnds << "->" << ans << "\n"; 
         }
         pq.pop();
     }

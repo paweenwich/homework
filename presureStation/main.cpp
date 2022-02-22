@@ -28,6 +28,7 @@ void dumpVector(vector<int> &v){
 }*/
 vector<int> cost;
 vector<int> cover;
+vector<int> dp;
 //stack<vector<int>> scover;
 int span;
 void doStation(int index,int value){
@@ -111,23 +112,57 @@ int greedy(){
     }
     return ret;
 }
+int minCostIfOnAt(int index){
+    int start = max(0,index - (2*span));
+    //cout << "minCost " << start << " " << index + 1 << "\n";
+    auto ret = min_element(dp.begin() + start,dp.begin() + index + 1);
+    return *ret;
+}
+int minCostFinal(){
+    int start = max(0,(int)(cost.size()-1-span));
+    //cout << "minCost " << start << " " << index + 1 << "\n";
+    auto ret = min_element(dp.begin() + start,dp.end());
+    return *ret;
+}
+
+// dp always keep minimum cost when that index ON
+// minCostIfOnAt 
+// - scan for min cost of all possible previous location that ON
+// Ex for span =2 longest previous index that can overlap with this index
+//  [. . . x . [.] . index . .]
+// minCostFinal
+// - scan for final solution at inedx.  For solution on that index, it is the min of 
+// all dp[]  for  index - span to index.  
+void doDP(){
+    for(int i=0;i<cost.size();i++){
+        if(i <= span){
+            dp[i] = cost[i];
+            continue;
+        }
+        dp[i] = minCostIfOnAt(i-1) + cost[i];
+    }
+}
 int main(int argc,char *argv[]){
     ios_base::sync_with_stdio(false); cin.tie(NULL);
     int m,n;
     string output;
     cin >> m >> n;
     span = n;
-    cout << "Input " << m << " "<< n <<" \n";
+    //cout << "Input " << m << " "<< n <<" \n";
     //process(s1,"","","");
     for(int i=0;i<m;i++){
         int s;
         cin >> s;
         cost.push_back(s);
         cover.push_back(0);
+        dp.push_back(0);
     }
     //dumpVector(cost);
     //currentMinCost = greedy();
-    ll minCost = process(0,-(span + 1),0);
-    cout << minCost << " " << procCount << " " << cv << " " << cache.size() << " \n";
+    //ll minCost = process(0,-(span + 1),0);
+    //cout << minCost << " " << procCount << " " << cv << " " << cache.size() << " \n";
+    doDP();
+    dumpVector(dp);
+    cout << minCostFinal() << "\n";
     return 0;
 }
